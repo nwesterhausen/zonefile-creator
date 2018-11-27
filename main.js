@@ -9,7 +9,7 @@ function download() {
     // https://stackoverflow.com/a/18197341
 
     // Creates a link which downloads the file, and "clicks" it.
-    let filename = $('#area-name').val();
+    let filename = $('#area-name').val()  === '' ? 'zones.yaml' : $('#area-name').val();
     let text = '# Generated with Zone.yaml Generator for Home Assistant' + `
 ` +$('#generated-yaml').text();
 
