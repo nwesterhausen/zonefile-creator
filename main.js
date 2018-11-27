@@ -10,7 +10,7 @@ function download() {
 
     // Creates a link which downloads the file, and "clicks" it.
     let filename = $('#area-name').val();
-    let text = '# Generated with the Zone File Generator' + `
+    let text = '# Generated with Zone.yaml Generator for Home Assistant' + `
 ` +$('#generated-yaml').text();
 
     var element = document.createElement('a');
