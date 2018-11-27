@@ -56,7 +56,6 @@ function validateLatlong() {
         $("#coordinates").addClass("is-valid");
         latlonfeedback.addClass("valid-feedback");
     }
-    console.log("Validated latlon (",lat,lon+")");
 }
 
 function clear() {
