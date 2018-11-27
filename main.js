@@ -1,3 +1,9 @@
+$("#download-btn").click(download);
+$("#add-btn").click(addZone);
+$("#clear-btn").click(clear);
+
+$("#area-name").change(validateTitle);
+
 function download() {
     // Modified from the example here:
     // https://stackoverflow.com/a/18197341

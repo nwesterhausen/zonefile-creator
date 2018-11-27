@@ -12,7 +12,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
-    <script src="main.js"></script>
 </head>
 <body>
 <div class="container">
@@ -32,8 +31,8 @@
                 <label class="col-form-label col-sm-3" for="radius">Radius (m)</label>
                 <input class="form-control col-sm-9" id="radius" placeholder="50">
             </div>
-            <button class="btn btn-danger" onclick="clearZone()">Clear</button>
-            <button class="btn btn-success" onclick="addZone()">Add</button>
+            <button class="btn btn-danger" id="clear-btn">Clear</button>
+            <button class="btn btn-success" id="add-btn">Add</button>
         </fieldset>
     </div>
 
@@ -43,11 +42,12 @@
         <div class="form-group row">
             <label class="col-form-label col-sm-3" for="area-name">Title:</label>
             <input class="form-control col-sm-9" type="text" id="area-name" name="name"
-                   placeholder="Name of City or Area" onchange="validateTitle()">
+                   placeholder="Name of City or Area">
         </div>
         <pre style="clear: both" id="generated-yaml"></pre>
     </div>
-    <button class="btn btn-primary" type="submit" onclick="download()">Download</button>
+    <button class="btn btn-primary" type="submit" id="download-btn">Download</button>
 </div>
+<script src="main.js"></script>
 </body>
 </html>
