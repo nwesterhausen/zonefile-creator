@@ -63,6 +63,7 @@ function clear() {
     $('#zoneName').val('');
     $('#coordinates').val('');
     $('#radius').val('');
+    $('#iconSelect').val("mdi:pin-outline");
 }
 
 function addZone() {
