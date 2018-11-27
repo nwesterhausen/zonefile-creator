@@ -3,7 +3,7 @@ function download() {
     // https://stackoverflow.com/a/18197341
 
     // Creates a link which downloads the file, and "clicks" it.
-    let filename = $('#area-name').val()+'.yaml';
+    let filename = $('#area-name').val();
     let text = '# Generated with the Zone File Generator' + `
 ` +$('#generated-yaml').text();
 
@@ -17,6 +17,13 @@ function download() {
     element.click();
 
     document.body.removeChild(element);
+}
+
+function validateTitle() {
+    let title = $('#area-name').val();
+    title = title.replace(/ /g,"_").toLowerCase();
+    title = title.replace(/.yaml$/,"");
+    $('#area-name').val(title+".yaml");
 }
 
 function clear() {
@@ -47,7 +54,7 @@ function addZone() {
   latitude: ` + latitude + `
   longitude: ` + longitude + `
   radius: ` + radius + `
-  icon: `+icon `
+  icon: `+icon + `
 `);
 
     clear();
