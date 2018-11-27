@@ -51,10 +51,13 @@ function validateLatlong() {
         latlonfeedback.html("Please use the format <em>latitude, longitude</em>!");
         $("#coordinates").addClass("is-invalid");
         latlonfeedback.addClass("invalid-feedback");
+        $("#addBtn").attr("disabled","");
     } else {
         latlonfeedback.html("Latitude: "+lat+", Longitude: "+lon);
         $("#coordinates").addClass("is-valid");
         latlonfeedback.addClass("valid-feedback");
+        if ($("#zoneName")[0].hasAttribute("is-valid"))
+            $("#addBtn").removeAttr("disabled");
     }
 }
 
