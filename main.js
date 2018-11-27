@@ -72,10 +72,6 @@ function addZone() {
         // fail
         return false;
     }
-    if ($('#coordinates').val() === '') {
-        //fail
-        return false;
-    }
 
     let name = $('#zoneName').val();
     let latitude = $('#coordinates').val().split(',')[0];
