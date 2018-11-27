@@ -1,7 +1,7 @@
 # Zone.yaml Generator for Home Assistant
-Simple HTML Tool for creating zone.yaml files.
+Simple HTML Tool for creating zone.yaml files. [Use it here](https://nwesterhausen.github.io/zonefile-creator/).
 
-## How to run
+## How to run on your own computer
 
 1. Download or clone the repository to your computer.
 2. If you downloaded a .zip, unpack it
