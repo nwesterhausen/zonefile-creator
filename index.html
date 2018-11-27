@@ -24,8 +24,8 @@
         <fieldset class="form-group">
             <legend>Build-a-zone</legend>
             <div class="form-group row">
-                <label class="col-form-label col-sm-3" for="zone-name">Name</label>
-                <input class="form-control col-sm-9" id="zone-name" placeholder="Delivery Pad">
+                <label class="col-form-label col-sm-3" for="zoneName">Name</label>
+                <input class="form-control col-sm-9" id="zoneName" placeholder="Delivery Pad">
             </div>
             <div class="form-group row">
                 <label class="col-form-label col-sm-3" for="coordinates">Lat, Lon</label>
@@ -36,8 +36,8 @@
                 <input class="form-control col-sm-9" id="radius" placeholder="25">
             </div>
             <div class="form-group row">
-                <label class="col-form-label col-sm-3" for="icon-select">Icon</label>
-                <select class="form-control col-sm-9"  id="icon-select" value="mdi:pin-outline">
+                <label class="col-form-label col-sm-3" for="iconSelect">Icon</label>
+                <select class="form-control col-sm-9" id="iconSelect" value="mdi:pin-outline">
                     <option value="mdi:pin-outline">Location Pin</option>
                     <option value="mdi:store">Store</option>
                     <option value="mdi:gas-station">Gas Station</option>
@@ -46,8 +46,8 @@
                     <option value="mdi:hotel">Hotel</option>
                 </select>
             </div>
-            <button class="btn btn-danger" id="clear-btn">Clear</button>
-            <button class="btn btn-success" id="add-btn">Add</button>
+            <button class="btn btn-danger" id="clearBtn">Clear</button>
+            <button class="btn btn-success" id="addBtn">Add</button>
         </fieldset>
     </div>
 
@@ -55,13 +55,13 @@
     <div>
         <legend>Generated YAML:</legend>
         <div class="form-group row">
-            <label class="col-form-label col-sm-3" for="area-name">Title:</label>
-            <input class="form-control col-sm-9" type="text" id="area-name" name="name"
+            <label class="col-form-label col-sm-3" for="title">Title:</label>
+            <input class="form-control col-sm-9" type="text" id="title" name="name"
                    placeholder="Name of City or Area">
         </div>
-        <pre style="clear: both" id="generated-yaml"></pre>
+        <pre style="clear: both" id="generatedYaml"></pre>
     </div>
-    <button class="btn btn-primary" type="submit" id="download-btn">Download</button>
+    <button class="btn btn-primary" type="submit" id="downloadBtn">Download</button>
 </div>
 <script src="main.js"></script>
 </body>

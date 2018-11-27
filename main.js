@@ -1,17 +1,17 @@
-$("#download-btn").click(download);
-$("#add-btn").click(addZone);
-$("#clear-btn").click(clear);
+$("#downloadBtn").click(download);
+$("#addBtn").click(addZone);
+$("#clearBtn").click(clear);
 
-$("#area-name").change(validateTitle);
+$("#title").change(validateTitle);
 
 function download() {
     // Modified from the example here:
     // https://stackoverflow.com/a/18197341
 
     // Creates a link which downloads the file, and "clicks" it.
-    let filename = $('#area-name').val()  === '' ? 'zones.yaml' : $('#area-name').val();
+    let filename = $('#title').val()  === '' ? 'zones.yaml' : $('#title').val();
     let text = '# Generated with Zone.yaml Generator for Home Assistant' + `
-` +$('#generated-yaml').text();
+` +$('#generatedYaml').text();
 
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/yaml;charset=utf-8,' + encodeURIComponent(text));
@@ -26,22 +26,22 @@ function download() {
 }
 
 function validateTitle() {
-    let title = $('#area-name').val();
+    let title = $('#title').val();
     title = title.replace(/ /g,"_").toLowerCase();
     title = title.replace(/.yaml$/,"");
-    $('#area-name').val(title+".yaml");
+    $('#title').val(title+".yaml");
 }
 
 function clear() {
     // Clears the form fields
-    $('#zone-name').val('');
+    $('#zoneName').val('');
     $('#coordinates').val('');
     $('#radius').val('');
 }
 
 function addZone() {
     // Creates YAML for zone
-    if ($('#zone-name').val() === '') {
+    if ($('#zoneName').val() === '') {
         // fail
         return false;
     }
@@ -50,13 +50,13 @@ function addZone() {
         return false;
     }
 
-    let name = $('#zone-name').val();
+    let name = $('#zoneName').val();
     let latitude = $('#coordinates').val().split(',')[0];
     let longitude = $('#coordinates').val().split(',')[1];
     let radius = $('#radius').val() === '' ? 25 : $('#radius').val();
-    let icon = $('#icon-select').val();
+    let icon = $('#iconSelect').val();
 
-    $('#generated-yaml').append(`- name: ` + name + `
+    $('#generatedYaml').append(`- name: ` + name + `
   latitude: ` + latitude + `
   longitude: ` + longitude + `
   radius: ` + radius + `
