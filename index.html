@@ -17,7 +17,7 @@
 <body>
 <div class="container">
     <h1>Zone Builder</h1>
-    <form onsubmit="download(this['name'].value+'.yaml', 'nothing')">
+    <div>
         <fieldset>
             <div class="form-group row">
                 <label class="col-form-label col-sm-3" for="area-name">Title:</label>
@@ -40,14 +40,15 @@
                 <button class="btn btn-danger" onclick="clearZone()">Clear</button>
                 <button class="btn btn-success" onclick="addZone()">Add</button>
             </fieldset>
-            <hr>
-            <fieldset>
-                <legend>Generated YAML:</legend>
-                <pre class="form-control" id="generate-yaml"></pre>
-            </fieldset>
         </fieldset>
-        <input class="btn btn-primary" type="submit" value="Download">
-    </form>
+    </div>
+
+    <hr>
+    <div>
+        <legend>Generated YAML:</legend>
+        <pre style="clear: both" id="generated-yaml"></pre>
+    </div>
+    <button class="btn btn-primary" type="submit" onclick="download()">Download</button>
 </div>
 </body>
 </html>
