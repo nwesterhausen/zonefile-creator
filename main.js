@@ -4,6 +4,7 @@ $("#clearBtn").click(clear);
 
 $("#title").change(validateTitle);
 $("#coordinates").change(validateLatlong);
+$("#zoneName").change(validateZoneName);
 
 function download() {
     // Modified from the example here:
@@ -56,7 +57,29 @@ function validateLatlong() {
         latlonfeedback.html("Latitude: "+lat+", Longitude: "+lon);
         $("#coordinates").addClass("is-valid");
         latlonfeedback.addClass("valid-feedback");
-        if ($("#zoneName")[0].hasAttribute("is-valid"))
+        if ($("#zoneName").hasClass("is-valid"))
+            $("#addBtn").removeAttr("disabled");
+    }
+}
+
+function validateZoneName() {
+
+    $("#zoneName").removeClass("is-invalid is-valid");
+
+    let name = $("#zoneName").val();
+    let namefeedback = $("#nameFeedback");
+    namefeedback.removeClass("valid-feedback invalid-feedback");
+
+    if (name.length === 0) {
+        namefeedback.html("Please use type a name!");
+        $("#zoneName").addClass("is-invalid");
+        namefeedback.addClass("invalid-feedback");
+        $("#addBtn").attr("disabled","");
+    } else {
+        namefeedback.html();
+        $("#zoneName").addClass("is-valid");
+        namefeedback.addClass("valid-feedback");
+        if ($("#coordinates").hasClass("is-valid"))
             $("#addBtn").removeAttr("disabled");
     }
 }
