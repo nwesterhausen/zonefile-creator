@@ -3,6 +3,7 @@ $("#addBtn").click(addZone);
 $("#clearBtn").click(clear);
 
 $("#title").change(validateTitle);
+$("#coordinates").change(validateLatlong);
 
 function download() {
     // Modified from the example here:
@@ -30,6 +31,32 @@ function validateTitle() {
     title = title.replace(/ /g,"_").toLowerCase();
     title = title.replace(/.yaml$/,"");
     $('#title').val(title+".yaml");
+}
+
+function validateLatlong() {
+
+    $("#coordinates").removeClass("is-invalid is-valid");
+
+    let latlon = $("#coordinates").val();
+    let latlonfeedback = $("#latlongFeedback");
+    latlonfeedback.removeClass();
+
+    let sep = ',';
+    if (latlon.indexOf(",") === -1) sep = ' ';
+
+    let lat = parseFloat(latlon.split(sep)[0]);
+    let lon = parseFloat(latlon.split(sep)[1]);
+
+    if (isNaN(lat) || isNaN(lon)) {
+        latlonfeedback.html("Please use the format <em>latitude, longitude</em>!");
+        $("#coordinates").addClass("is-invalid");
+        latlonfeedback.addClass("invalid-feedback");
+    } else {
+        latlonfeedback.html("Latitude: "+lat+", Longitude: "+lon);
+        $("#coordinates").addClass("is-valid");
+        latlonfeedback.addClass("valid-feedback");
+    }
+    console.log("Validated latlon (",lat,lon+")");
 }
 
 function clear() {
