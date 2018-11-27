@@ -9,11 +9,13 @@ Simple HTML Tool for creating zone.yaml files.
  
 ## Usage
 
-The top section is for generating different zones from a title, latitude, and longitude. If you don't specify a radius, it will use `25`, and right now the icon is forced to `mdi:pin-outline`.
+Use the form at the top to add individual zones to your zone file.
+After you're finished adding zones, download the completed YAML.
 
 1. Input a name.
 2. Input latitude and longitude you copy from a place like Google Maps.
 2. (Optional) Input a radius. *defaults to `25m`*
+3. (Optional) Change the icon with the dropdown
 4. Click **Add**
 
 4. Repeat those steps until all the zones you want in your zone file are created (you will see it fill in down below as you go).
