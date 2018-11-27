@@ -31,6 +31,17 @@
                 <label class="col-form-label col-sm-3" for="radius">Radius (m)</label>
                 <input class="form-control col-sm-9" id="radius" placeholder="50">
             </div>
+            <div class="form-group row">
+                <label class="col-form-label col-sm-3" for="icon-select">Icon</label>
+                <select class="form-control col-sm-9"  id="icon-select" value="mdi:pin-outline">
+                    <option value="mdi:pin-outline">Location Pin</option>
+                    <option value="mdi:store">Store</option>
+                    <option value="mdi:gas-station">Gas Station</option>
+                    <option value="mdi:silverware-fork-knife">Restaurant</option>
+                    <option value="mdi:airport">Airport</option>
+                    <option value="mdi:hotel">Hotel</option>
+                </select>
+            </div>
             <button class="btn btn-danger" id="clear-btn">Clear</button>
             <button class="btn btn-success" id="add-btn">Add</button>
         </fieldset>

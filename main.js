@@ -54,7 +54,7 @@ function addZone() {
     let latitude = $('#coordinates').val().split(',')[0];
     let longitude = $('#coordinates').val().split(',')[1];
     let radius = $('#radius').val() === '' ? 25 : $('#radius').val();
-    let icon = "mdi:pin-outline";
+    let icon = $('#icon-select').val();
 
     $('#generated-yaml').append(`- name: ` + name + `
   latitude: ` + latitude + `
