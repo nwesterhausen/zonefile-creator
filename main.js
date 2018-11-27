@@ -39,7 +39,7 @@ function validateLatlong() {
 
     let latlon = $("#coordinates").val();
     let latlonfeedback = $("#latlongFeedback");
-    latlonfeedback.removeClass();
+    latlonfeedback.removeClass("valid-feedback invalid-feedback");
 
     let sep = ',';
     if (latlon.indexOf(",") === -1) sep = ' ';
