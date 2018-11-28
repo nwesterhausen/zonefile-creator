@@ -1,3 +1,7 @@
+// SET API
+const API_KEY = 35d6bff4686147378ebf7d20ce5a1daf;
+
+// REGISTER EVENT LISTENERS
 $("#downloadBtn").click(download);
 $("#addBtn").click(addZone);
 $("#clearBtn").click(clear);
@@ -6,6 +10,7 @@ $("#title").change(validateTitle);
 $("#coordinates").change(validateLatlong);
 $("#zoneName").change(validateZoneName);
 
+// FUNCTIONS
 function download() {
     // Modified from the example here:
     // https://stackoverflow.com/a/18197341
@@ -59,6 +64,23 @@ function validateLatlong() {
         latlonfeedback.addClass("valid-feedback");
         if ($("#zoneName").hasClass("is-valid"))
             $("#addBtn").removeAttr("disabled");
+    }
+}
+
+function parseLocationJSON(json) {
+    let latlonfeedback = $("#latlongFeedback");
+    if (json.hasOwnProperty("results") && json.results.length > 1) {
+        latlonfeedback.html("Latitude: "+json.results[0].geometry.lat+", Longitude: "+json.results[0].geometry.lng);
+        $("#coordinates").addClass("is-valid");
+        latlonfeedback.addClass("valid-feedback");
+        if ($("#zoneName").hasClass("is-valid"))
+            $("#addBtn").removeAttr("disabled");
+    } else {
+        latlonfeedback.html("Did not get a valid response when looking up the address, see console.");
+        $("#coordinates").addClass("is-invalid");
+        latlonfeedback.addClass("invalid-feedback");
+        $("#addBtn").attr("disabled","");
+        console.error("API return was not as expected.",json);
     }
 }
 
