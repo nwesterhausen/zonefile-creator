@@ -62,6 +62,9 @@ function validateLatlong() {
     }
 }
 
+/**
+ * Looks at the value in the 'zoneName' field and checks that it isn't empty.
+ */
 function validateZoneName() {
 
     $("#zoneName").removeClass("is-invalid is-valid");
@@ -84,33 +87,39 @@ function validateZoneName() {
     }
 }
 
+/**
+ * Clear the name, coordinate and radius fields. Set the icon to the default.
+ */
 function clear() {
-    // Clears the form fields
     $('#zoneName').val('');
     $('#coordinates').val('');
     $('#radius').val('');
     $('#iconSelect').val("mdi:pin-outline");
 }
 
+/**
+ * Build a zone from the values in the form, formatted as YAML.
+ * This shouldn't be called unless input has been validated.
+ * It will sanity check for the "is-valid" class in the name and coordinates field.
+ */
 function addZone() {
-    // Creates YAML for zone
-    if ($('#zoneName').val() === '') {
-        // fail
-        return false;
-    }
+    if ($('#coordinates').hasClass("is-valid") && $('#zoneName').hasClass("is-valid")) {
+        let name = $('#zoneName').val();
+        let latitude = $('#coordinates').val().split(',')[0];
+        let longitude = $('#coordinates').val().split(',')[1];
+        let radius = $('#radius').val() === '' ? 25 : $('#radius').val();
+        let icon = $('#iconSelect').val();
 
-    let name = $('#zoneName').val();
-    let latitude = $('#coordinates').val().split(',')[0];
-    let longitude = $('#coordinates').val().split(',')[1];
-    let radius = $('#radius').val() === '' ? 25 : $('#radius').val();
-    let icon = $('#iconSelect').val();
-
-    $('#generatedYaml').append(`- name: ` + name + `
+        $('#generatedYaml').append(
+`- name: ` + name + `
   latitude: ` + latitude + `
   longitude: ` + longitude + `
   radius: ` + radius + `
-  icon: `+icon + `
+  icon: ` + icon + `
 `);
 
-    clear();
+        clear();
+    } else {
+        console.error("Unable to create a zone because one or more of the inputs were invalid.");
+    }
 }
