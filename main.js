@@ -3,7 +3,7 @@ $("#addBtn").click(addZone);
 $("#clearBtn").click(clear);
 
 $("#title").change(validateTitle);
-$("#coordinates").change(validateLatlong);
+$("#latlon").change(validateLatlong);
 $("#zoneName").change(validateZoneName);
 
 function download() {
@@ -36,9 +36,9 @@ function validateTitle() {
 
 function validateLatlong() {
 
-    $("#coordinates").removeClass("is-invalid is-valid");
+    $("#latlon").removeClass("is-invalid is-valid");
 
-    let latlon = $("#coordinates").val();
+    let latlon = $("#latlon").val();
     let latlonfeedback = $("#latlongFeedback");
     latlonfeedback.removeClass("valid-feedback invalid-feedback");
 
@@ -50,12 +50,12 @@ function validateLatlong() {
 
     if (isNaN(lat) || isNaN(lon)) {
         latlonfeedback.html("Please use the format <em>latitude, longitude</em>!");
-        $("#coordinates").addClass("is-invalid");
+        $("#latlon").addClass("is-invalid");
         latlonfeedback.addClass("invalid-feedback");
         $("#addBtn").attr("disabled","");
     } else {
         latlonfeedback.html("Latitude: "+lat+", Longitude: "+lon);
-        $("#coordinates").addClass("is-valid");
+        $("#latlon").addClass("is-valid");
         latlonfeedback.addClass("valid-feedback");
         if ($("#zoneName").hasClass("is-valid"))
             $("#addBtn").removeAttr("disabled");
@@ -82,7 +82,7 @@ function validateZoneName() {
         namefeedback.html();
         $("#zoneName").addClass("is-valid");
         namefeedback.addClass("valid-feedback");
-        if ($("#coordinates").hasClass("is-valid"))
+        if ($("#latlon").hasClass("is-valid"))
             $("#addBtn").removeAttr("disabled");
     }
 }
@@ -92,7 +92,7 @@ function validateZoneName() {
  */
 function clear() {
     $('#zoneName').val('');
-    $('#coordinates').val('');
+    $('#latlon').val('');
     $('#radius').val('');
     $('#iconSelect').val("mdi:pin-outline");
 }
@@ -103,10 +103,10 @@ function clear() {
  * It will sanity check for the "is-valid" class in the name and coordinates field.
  */
 function addZone() {
-    if ($('#coordinates').hasClass("is-valid") && $('#zoneName').hasClass("is-valid")) {
+    if ($('#latlon').hasClass("is-valid") && $('#zoneName').hasClass("is-valid")) {
         let name = $('#zoneName').val();
-        let latitude = $('#coordinates').val().split(',')[0];
-        let longitude = $('#coordinates').val().split(',')[1];
+        let latitude = $('#latlon').val().split(',')[0];
+        let longitude = $('#latlon').val().split(',')[1];
         let radius = $('#radius').val() === '' ? 25 : $('#radius').val();
         let icon = $('#iconSelect').val();
 
