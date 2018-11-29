@@ -1,6 +1,7 @@
 $("#downloadBtn").click(download);
 $("#addBtn").click(addZone);
 $("#clearBtn").click(clear);
+$("#copyBtn").click(copyToClipboard);
 
 $("#title").change(validateTitle);
 $("#latlon").change(validateLatlong);
@@ -122,4 +123,19 @@ function addZone() {
     } else {
         console.error("Unable to create a zone because one or more of the inputs were invalid.");
     }
+}
+
+/**
+ * Put text onto the clipboard
+ * @param string text to put on the clipboard
+ */
+function copyToClipboard() {
+    const copyText = document.getElementById("generatedYaml").textContent;
+    const textArea = document.createElement('textarea');
+    textArea.id = "tempTA";
+    textArea.textContent = copyText;
+    document.body.append(textArea);
+    textArea.select();
+    document.execCommand("copy");
+    $('#tempTA').remove();
 }

@@ -58,6 +58,10 @@
     <hr>
     <div>
         <legend>Generated YAML:</legend>
+        <p>
+            From here you can copy out your completed YAML and paste into your Home Assistant config file or give it
+            a name and download a YAML file to use.
+        </p>
         <div class="form-group row">
             <label class="col-form-label col-sm-3" for="title">Title:</label>
             <input class="form-control col-sm-9" type="text" id="title" name="name"
@@ -65,6 +69,7 @@
         </div>
         <pre style="clear: both" id="generatedYaml"></pre>
     </div>
+    <button class="btn btn-info" id="copyBtn">Copy</button>
     <button class="btn btn-primary" type="submit" id="downloadBtn">Download</button>
 </div>
 <script src="main.js"></script>
