@@ -96,6 +96,7 @@ function clear() {
     $('#latlon').val('');
     $('#radius').val('');
     $('#iconSelect').val("mdi:pin-outline");
+    $('#addBtn').attr("disabled","");
 }
 
 /**
