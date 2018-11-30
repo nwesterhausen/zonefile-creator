@@ -21,10 +21,21 @@ When you are ready to download the formatted YAML, click **Download** at the bot
 ### Using a zones.yaml file
 You can use the [include](https://www.home-assistant.io/docs/configuration/splitting_configuration/) directive in your configuration.yaml to include an external file with your zones.
 
-After putting  your zones.yaml file next to your configuration.yaml, add this to your configuration.yaml:
-```yaml
-zones: !include zone.yaml
-```
+1. Put your zones.yaml file next to your configuration.yaml.
+2. Add this to your configuration.yaml:
+  ```yaml
+  zones: !include zone.yaml
+  ```
+
+### Using multiple zones files
+You can also use [configuration splitting]() to use more than one yaml file for all your zones. For example, my zones files are named after what is inside them, and I include them all into my configuration.
+
+1. Create a folder next to your configuration.yaml file to put your zones into.
+2. Put your zones.yaml files into that folder.
+3. Add this to your configuration.yaml:
+  ```yaml
+  zones: !include_dir_merge zones
+  ```
 ## How to run on your own computer
 If you don't want to run this tool online, you can run it from your own machine.
 
