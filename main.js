@@ -2,16 +2,20 @@ $("#downloadBtn").click(download);
 $("#addBtn").click(addZone);
 $("#clearBtn").click(clear);
 $("#copyBtn").click(copyToClipboard);
+$("#useCurrentLocation").click(fillinCurrentLocation);
 
 $("#title").change(validateTitle);
 $("#latlon").change(validateLatlong);
 $("#zoneName").change(validateZoneName);
 
+/**
+ * Takes the generated YAML and puts it into a file that gets downloaded.
+ *
+ * Modified from the example here:
+ * https://stackoverflow.com/a/18197341
+ *
+ */
 function download() {
-    // Modified from the example here:
-    // https://stackoverflow.com/a/18197341
-
-    // Creates a link which downloads the file, and "clicks" it.
     let filename = $('#title').val()  === '' ? 'zones.yaml' : $('#title').val();
     let text = '# Generated with Zone.yaml Generator for Home Assistant' + `
 ` +$('#generatedYaml').text();
@@ -28,6 +32,10 @@ function download() {
     document.body.removeChild(element);
 }
 
+/**
+ * Make sure the title is not empty, and let's not duplicate '.yaml' at the end :)
+ * Also replaces spaces with underscores.
+ */
 function validateTitle() {
     let title = $('#title').val();
     title = title.replace(/ /g,"_").toLowerCase();
@@ -35,6 +43,9 @@ function validateTitle() {
     $('#title').val(title+".yaml");
 }
 
+/**
+ * Performs validation on the latitude/longitude values, ensuring we can parse out two numbers from the input.
+ */
 function validateLatlong() {
 
     $("#latlon").removeClass("is-invalid is-valid");
@@ -139,4 +150,17 @@ function copyToClipboard() {
     textArea.select();
     document.execCommand("copy");
     $('#tempTA').remove();
+}
+
+/**
+ * Uses the geolocation API to fillin the current location
+ */
+function fillinCurrentLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            $("#latlon").attr("value",position.coords.latitude+", "+position.coords.longitude);
+        });
+    } else {
+        $("#latlon").attr("value","Geolocation is not supported by this browser.");
+    }
 }
