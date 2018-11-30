@@ -1,4 +1,5 @@
 // SET API
+const TOOL_VERSION = "0.3";
 const API_KEY = "35d6bff4686147378ebf7d20ce5a1daf";
 const BASE_API_URL = "https://api.opencagedata.com/geocode/v1/json?key="+API_KEY+"&q=";
 
@@ -14,6 +15,8 @@ $("#title").change(validateTitle);
 $("#location").change(validateLocation);
 $("#zoneName").change(validateZoneName);
 
+$("#version_number").text(TOOL_VERSION);
+
 /**
  * Takes the generated YAML and puts it into a file that gets downloaded.
  *
@@ -23,7 +26,7 @@ $("#zoneName").change(validateZoneName);
  */
 function download() {
     let filename = $('#title').val()  === '' ? 'zones.yaml' : $('#title').val();
-    let text = '# Generated with Zone.yaml Generator for Home Assistant' + `
+    let text = '# Generated with Zone.yaml Generator for Home Assistant, version ' + TOOL_VERSION + `
 ` +$('#generatedYaml').text();
 
     var element = document.createElement('a');
