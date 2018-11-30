@@ -17,6 +17,14 @@ After you're finished adding zones, download the completed YAML.
 5. (Optional) Specify a title for your YAML file. *defaults to `zones.yaml`*
 
 When you are ready to download the formatted YAML, click **Download** at the bottom of the page.
+
+### Using a zones.yaml file
+You can use the [include](https://www.home-assistant.io/docs/configuration/splitting_configuration/) directive in your configuration.yaml to include an external file with your zones.
+
+After putting  your zones.yaml file next to your configuration.yaml, add this to your configuration.yaml:
+```yaml
+zones: !include zone.yaml
+```
 ## How to run on your own computer
 If you don't want to run this tool online, you can run it from your own machine.
 
