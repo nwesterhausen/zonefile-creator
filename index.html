@@ -30,10 +30,15 @@
                 <input class="form-control col-sm-9" id="zoneName" placeholder="Delivery Pad">
                 <div id="nameFeedback"></div>
             </div>
-            <div class="form-group row justify-content-end" id="latlongGroup">
-                <label class="col-form-label col-sm-3" for="latlon">Lat, Lon</label>
-                <input class="form-control col-sm-9" id="latlon" placeholder="10.12345, -10.98765">
-                <div class="col-sm-9" id="latlongFeedback"></div>
+            <div class="form-group row justify-content-end" id="locationGroup">
+                <label class="col-form-label col-sm-3" for="location">Location</label>
+                <input class="form-control col-sm-9" id="location" placeholder="10.12345, -10.98765">
+                <div class="col-sm-9" id="locationFeedback"></div>
+            </div>
+            <div class="form-group row justify-content-end">
+                <button class="btn btn-sm btn-outline-secondary" id="toggleLookupType">Lookup by <span id="lookupType">address</span>
+                    instead.
+                </button>
                 <button class="btn btn-sm btn-outline-primary" id="useCurrentLocation">Use my location</button>
             </div>
             <div class="form-group row" id="radiusGroup">
