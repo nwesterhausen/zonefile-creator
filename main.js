@@ -1,5 +1,5 @@
 // SET API
-const TOOL_VERSION = "0.3";
+const TOOL_VERSION = "0.4";
 const API_KEY = "35d6bff4686147378ebf7d20ce5a1daf";
 const BASE_API_URL = "https://api.opencagedata.com/geocode/v1/json?key="+API_KEY+"&q=";
 
