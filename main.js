@@ -1,21 +1,25 @@
 // SET API
-const API_KEY = 35d6bff4686147378ebf7d20ce5a1daf;
+const API_KEY = "35d6bff4686147378ebf7d20ce5a1daf";
 
 // REGISTER EVENT LISTENERS
 $("#downloadBtn").click(download);
 $("#addBtn").click(addZone);
 $("#clearBtn").click(clear);
+$("#copyBtn").click(copyToClipboard);
+$("#useCurrentLocation").click(fillinCurrentLocation);
 
 $("#title").change(validateTitle);
-$("#coordinates").change(validateLatlong);
+$("#latlon").change(validateLatlong);
 $("#zoneName").change(validateZoneName);
 
-// FUNCTIONS
+/**
+ * Takes the generated YAML and puts it into a file that gets downloaded.
+ *
+ * Modified from the example here:
+ * https://stackoverflow.com/a/18197341
+ *
+ */
 function download() {
-    // Modified from the example here:
-    // https://stackoverflow.com/a/18197341
-
-    // Creates a link which downloads the file, and "clicks" it.
     let filename = $('#title').val()  === '' ? 'zones.yaml' : $('#title').val();
     let text = '# Generated with Zone.yaml Generator for Home Assistant' + `
 ` +$('#generatedYaml').text();
@@ -32,6 +36,10 @@ function download() {
     document.body.removeChild(element);
 }
 
+/**
+ * Make sure the title is not empty, and let's not duplicate '.yaml' at the end :)
+ * Also replaces spaces with underscores.
+ */
 function validateTitle() {
     let title = $('#title').val();
     title = title.replace(/ /g,"_").toLowerCase();
@@ -39,11 +47,14 @@ function validateTitle() {
     $('#title').val(title+".yaml");
 }
 
+/**
+ * Performs validation on the latitude/longitude values, ensuring we can parse out two numbers from the input.
+ */
 function validateLatlong() {
 
-    $("#coordinates").removeClass("is-invalid is-valid");
+    $("#latlon").removeClass("is-invalid is-valid");
 
-    let latlon = $("#coordinates").val();
+    let latlon = $("#latlon").val();
     let latlonfeedback = $("#latlongFeedback");
     latlonfeedback.removeClass("valid-feedback invalid-feedback");
 
@@ -55,18 +66,22 @@ function validateLatlong() {
 
     if (isNaN(lat) || isNaN(lon)) {
         latlonfeedback.html("Please use the format <em>latitude, longitude</em>!");
-        $("#coordinates").addClass("is-invalid");
+        $("#latlon").addClass("is-invalid");
         latlonfeedback.addClass("invalid-feedback");
         $("#addBtn").attr("disabled","");
     } else {
         latlonfeedback.html("Latitude: "+lat+", Longitude: "+lon);
-        $("#coordinates").addClass("is-valid");
+        $("#latlon").addClass("is-valid");
         latlonfeedback.addClass("valid-feedback");
         if ($("#zoneName").hasClass("is-valid"))
             $("#addBtn").removeAttr("disabled");
     }
 }
 
+/**
+ * Parse location from the JSON returned by the API
+ * @param json response from forward geocoding response
+ */
 function parseLocationJSON(json) {
     let latlonfeedback = $("#latlongFeedback");
     if (json.hasOwnProperty("results") && json.results.length > 1) {
@@ -84,6 +99,9 @@ function parseLocationJSON(json) {
     }
 }
 
+/**
+ * Looks at the value in the 'zoneName' field and checks that it isn't empty.
+ */
 function validateZoneName() {
 
     $("#zoneName").removeClass("is-invalid is-valid");
@@ -101,38 +119,73 @@ function validateZoneName() {
         namefeedback.html();
         $("#zoneName").addClass("is-valid");
         namefeedback.addClass("valid-feedback");
-        if ($("#coordinates").hasClass("is-valid"))
+        if ($("#latlon").hasClass("is-valid"))
             $("#addBtn").removeAttr("disabled");
     }
 }
 
+/**
+ * Clear the name, coordinate and radius fields. Set the icon to the default.
+ */
 function clear() {
-    // Clears the form fields
     $('#zoneName').val('');
-    $('#coordinates').val('');
+    $('#latlon').val('');
     $('#radius').val('');
     $('#iconSelect').val("mdi:pin-outline");
+    $('#addBtn').attr("disabled","");
 }
 
+/**
+ * Build a zone from the values in the form, formatted as YAML.
+ * This shouldn't be called unless input has been validated.
+ * It will sanity check for the "is-valid" class in the name and coordinates field.
+ */
 function addZone() {
-    // Creates YAML for zone
-    if ($('#zoneName').val() === '') {
-        // fail
-        return false;
-    }
+    if ($('#latlon').hasClass("is-valid") && $('#zoneName').hasClass("is-valid")) {
+        let name = $('#zoneName').val();
+        let latitude = $('#latlon').val().split(',')[0];
+        let longitude = $('#latlon').val().split(',')[1];
+        let radius = $('#radius').val() === '' ? 25 : $('#radius').val();
+        let icon = $('#iconSelect').val();
 
-    let name = $('#zoneName').val();
-    let latitude = $('#coordinates').val().split(',')[0];
-    let longitude = $('#coordinates').val().split(',')[1];
-    let radius = $('#radius').val() === '' ? 25 : $('#radius').val();
-    let icon = $('#iconSelect').val();
-
-    $('#generatedYaml').append(`- name: ` + name + `
+        $('#generatedYaml').append(
+`- name: ` + name + `
   latitude: ` + latitude + `
   longitude: ` + longitude + `
   radius: ` + radius + `
-  icon: `+icon + `
+  icon: ` + icon + `
 `);
 
-    clear();
+        clear();
+    } else {
+        console.error("Unable to create a zone because one or more of the inputs were invalid.");
+    }
+}
+
+/**
+ * Put text onto the clipboard
+ * @param string text to put on the clipboard
+ */
+function copyToClipboard() {
+    const copyText = document.getElementById("generatedYaml").textContent;
+    const textArea = document.createElement('textarea');
+    textArea.id = "tempTA";
+    textArea.textContent = copyText;
+    document.body.append(textArea);
+    textArea.select();
+    document.execCommand("copy");
+    $('#tempTA').remove();
+}
+
+/**
+ * Uses the geolocation API to fillin the current location
+ */
+function fillinCurrentLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            $("#latlon").attr("value",position.coords.latitude+", "+position.coords.longitude);
+        });
+    } else {
+        $("#latlon").attr("value","Geolocation is not supported by this browser.");
+    }
 }

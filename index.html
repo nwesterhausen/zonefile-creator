@@ -18,7 +18,9 @@
     <h1>Zone Builder for <a href="https://home-assistant.io/">Home Assistant</a></h1>
     <p>
         Use this tool to help you generate a set of <a href="https://www.home-assistant.io/components/zone/">zones</a>
-        that you can use within Home Assistant for automation or record keeping.
+        that you can use within Home Assistant for automation or record keeping. Visit the
+        <a href="https://github.com/nwesterhausen/zonefile-creator">Github Repo</a> to file an issue or take a look at
+        how it works!
     </p>
     <div>
         <fieldset class="form-group">
@@ -29,9 +31,10 @@
                 <div id="nameFeedback"></div>
             </div>
             <div class="form-group row justify-content-end" id="latlongGroup">
-                <label class="col-form-label col-sm-3" for="coordinates">Lat, Lon</label>
-                <input class="form-control col-sm-9" id="coordinates" placeholder="39.617190, -86.061363">
+                <label class="col-form-label col-sm-3" for="latlon">Lat, Lon</label>
+                <input class="form-control col-sm-9" id="latlon" placeholder="10.12345, -10.98765">
                 <div class="col-sm-9" id="latlongFeedback"></div>
+                <button class="btn btn-sm btn-outline-primary" id="useCurrentLocation">Use my location</button>
             </div>
             <div class="form-group row" id="radiusGroup">
                 <label class="col-form-label col-sm-3" for="radius">Radius (m)</label>
@@ -42,6 +45,7 @@
                 <label class="col-form-label col-sm-3" for="iconSelect">Icon</label>
                 <select class="form-control col-sm-9" id="iconSelect" value="mdi:pin-outline">
                     <option value="mdi:pin-outline">Location Pin</option>
+                    <option value="mdi:office-building">Office</option>
                     <option value="mdi:store">Store</option>
                     <option value="mdi:gas-station">Gas Station</option>
                     <option value="mdi:silverware-fork-knife">Restaurant</option>
@@ -57,6 +61,10 @@
     <hr>
     <div>
         <legend>Generated YAML:</legend>
+        <p>
+            From here you can copy out your completed YAML and paste into your Home Assistant config file or give it
+            a name and download a YAML file to use.
+        </p>
         <div class="form-group row">
             <label class="col-form-label col-sm-3" for="title">Title:</label>
             <input class="form-control col-sm-9" type="text" id="title" name="name"
@@ -64,6 +72,7 @@
         </div>
         <pre style="clear: both" id="generatedYaml"></pre>
     </div>
+    <button class="btn btn-info" id="copyBtn">Copy</button>
     <button class="btn btn-primary" type="submit" id="downloadBtn">Download</button>
 </div>
 <script src="main.js"></script>
