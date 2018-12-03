@@ -7,6 +7,7 @@ const BASE_API_URL = "https://api.opencagedata.com/geocode/v1/json?key=" + API_K
 $("#downloadBtn").click(download);
 $("#addBtn").click(addZone);
 $("#clearBtn").click(clear);
+$("#clearYamlBtn").click(clearYaml);
 $("#copyBtn").click(copyToClipboard);
 
 $("#title").change(validateTitle);
@@ -167,6 +168,10 @@ function clear() {
     $('#radius').val('');
     $('#iconSelect').val("mdi:pin-outline");
     $('#addBtn').attr("disabled", "");
+}
+
+function clearYaml() {
+    $("#generatedYaml").html("");
 }
 
 /**
