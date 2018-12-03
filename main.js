@@ -1,15 +1,13 @@
 // SET API
 const TOOL_VERSION = "0.4";
 const API_KEY = "35d6bff4686147378ebf7d20ce5a1daf";
-const BASE_API_URL = "https://api.opencagedata.com/geocode/v1/json?key="+API_KEY+"&q=";
+const BASE_API_URL = "https://api.opencagedata.com/geocode/v1/json?key=" + API_KEY + "&q=";
 
 // REGISTER EVENT LISTENERS
 $("#downloadBtn").click(download);
 $("#addBtn").click(addZone);
 $("#clearBtn").click(clear);
 $("#copyBtn").click(copyToClipboard);
-$("#useCurrentLocation").click(fillinCurrentLocation);
-$("#toggleLookupType").click(toggleLookupType);
 
 $("#title").change(validateTitle);
 $("#location").change(validateLocation);
@@ -25,9 +23,9 @@ $("#version_number").text(TOOL_VERSION);
  *
  */
 function download() {
-    let filename = $('#title').val()  === '' ? 'zones.yaml' : $('#title').val();
+    let filename = $('#title').val() === '' ? 'zones.yaml' : $('#title').val();
     let text = '# Generated with Zone.yaml Generator for Home Assistant, version ' + TOOL_VERSION + `
-` +$('#generatedYaml').text();
+` + $('#generatedYaml').text();
 
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/yaml;charset=utf-8,' + encodeURIComponent(text));
@@ -47,30 +45,46 @@ function download() {
  */
 function validateTitle() {
     let title = $('#title').val();
-    title = title.replace(/ /g,"_").toLowerCase();
-    title = title.replace(/.yaml$/,"");
-    $('#title').val(title+".yaml");
+    title = title.replace(/ /g, "_").toLowerCase();
+    title = title.replace(/.yaml$/, "");
+    $('#title').val(title + ".yaml");
 }
 
 /**
  * Performs validation on the latitude/longitude values, ensuring we can parse out two numbers from the input.
  */
 function validateLocation() {
-
-    $("#location").removeClass("is-invalid is-valid");
-
-    let locinput = $("#location").val();
     let locationfeedback = $("#locationFeedback");
+    let locationInput = $("#location");
+    let locinput = locationInput.val();
+    let lookupType = locationInput.attr("data-lookup-type");
+
+    locationInput.removeClass("is-invalid is-valid");
     locationfeedback.removeClass("valid-feedback invalid-feedback");
+    locationfeedback.text("");
 
-    if ($("#lookupType").text() === "address") {
+    if (locinput === "") return;
 
-        console.log("Looking up by address!",locinput);
-        $.getJSON(BASE_API_URL+encodeURI(locinput), null , function(result){
-            console.log("Got result back!",result);
-            parseLocationJSON(result);
-        });
+    if (lookupType === "useAddress") {
+        let sep = ',';
+        if (locinput.indexOf(",") === -1) sep = ' ';
 
+        let lat = parseFloat(locinput.split(sep)[0]);
+        let lon = parseFloat(locinput.split(sep)[1]);
+
+        if (locinput.split(sep).length === 2 && typeof lat === "number" && typeof lon === "number") {
+            locationfeedback.html("This looks like latitude and longitude, please use an address!");
+            locationInput.addClass("is-invalid");
+            locationfeedback.addClass("invalid-feedback");
+            $("#addBtn").attr("disabled", "");
+        } else {
+
+            console.log("Looking up by address!", locinput);
+            $.getJSON(BASE_API_URL + encodeURI(locinput), null, function (result) {
+                console.log("Got result back!", result);
+                parseLocationJSON(result);
+            });
+        }
     } else {
 
         let sep = ',';
@@ -79,14 +93,14 @@ function validateLocation() {
         let lat = parseFloat(locinput.split(sep)[0]);
         let lon = parseFloat(locinput.split(sep)[1]);
 
-        if (isNaN(lat) || isNaN(lon)) {
+        if (isNaN(lat) || isNaN(lon) || locinput.split(sep)[0].length >= 12) {
             locationfeedback.html("Please use the format <em>latitude, longitude</em>!");
-            $("#location").addClass("is-invalid");
+            locationInput.addClass("is-invalid");
             locationfeedback.addClass("invalid-feedback");
             $("#addBtn").attr("disabled", "");
         } else {
             locationfeedback.html("Latitude: " + lat + ", Longitude: " + lon);
-            $("#location").addClass("is-valid");
+            locationInput.addClass("is-valid");
             locationfeedback.addClass("valid-feedback");
             if ($("#zoneName").hasClass("is-valid"))
                 $("#addBtn").removeAttr("disabled");
@@ -100,8 +114,8 @@ function validateLocation() {
  */
 function parseLocationJSON(json) {
     let latlonfeedback = $("#locationFeedback");
-    if (json.hasOwnProperty("results") && json.results.length > 1) {
-        latlonfeedback.html("Latitude: "+json.results[0].geometry.lat+", Longitude: "+json.results[0].geometry.lng);
+    if (json.hasOwnProperty("results") && json.results.length > 0) {
+        latlonfeedback.html("Latitude: " + json.results[0].geometry.lat + ", Longitude: " + json.results[0].geometry.lng);
         $("#location").addClass("is-valid");
         latlonfeedback.addClass("valid-feedback");
         if ($("#zoneName").hasClass("is-valid"))
@@ -110,8 +124,8 @@ function parseLocationJSON(json) {
         latlonfeedback.html("Did not get a valid response when looking up the address, see console.");
         $("#location").addClass("is-invalid");
         latlonfeedback.addClass("invalid-feedback");
-        $("#addBtn").attr("disabled","");
-        console.error("API return was not as expected.",json);
+        $("#addBtn").attr("disabled", "");
+        console.error("API return was not as expected.", json);
     }
 }
 
@@ -130,7 +144,7 @@ function validateZoneName() {
         namefeedback.html("Please use type a name!");
         $("#zoneName").addClass("is-invalid");
         namefeedback.addClass("invalid-feedback");
-        $("#addBtn").attr("disabled","");
+        $("#addBtn").attr("disabled", "");
     } else {
         namefeedback.html();
         $("#zoneName").addClass("is-valid");
@@ -148,7 +162,7 @@ function clear() {
     $('#location').val('');
     $('#radius').val('');
     $('#iconSelect').val("mdi:pin-outline");
-    $('#addBtn').attr("disabled","");
+    $('#addBtn').attr("disabled", "");
 }
 
 /**
@@ -165,7 +179,7 @@ function addZone() {
         let icon = $('#iconSelect').val();
 
         $('#generatedYaml').append(
-`- name: ` + name + `
+            `- name: ` + name + `
   latitude: ` + latitude + `
   longitude: ` + longitude + `
   radius: ` + radius + `
@@ -193,29 +207,31 @@ function copyToClipboard() {
     $('#tempTA').remove();
 }
 
-/**
- * Uses the geolocation API to fillin the current location
- */
-function fillinCurrentLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            $("#location").attr("value",position.coords.latitude+", "+position.coords.longitude);
+$('input[type="radio"]').on('click change', function (e) {
+    let locationInput = $("#location");
+    locationInput.attr("data-lookup-type", e.target.id);
+    locationInput.removeAttr("disabled");
+    locationInput.removeClass("is-invalid is-valid");
+    switch (e.target.id) {
+        case "useLatlon":
+            locationInput.attr("placeholder", "10.5213, -7.4663");
             validateLocation();
-        });
-    } else {
-        $("#location").attr("value","Geolocation is not supported by this browser.");
+            break;
+        case "useAddress":
+            locationInput.attr("placeholder", "123 Main Street, 43212");
+            validateLocation();
+            break;
+        case "useGeoloc":
+            locationInput.attr("disabled", "");
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    locationInput.attr("value", position.coords.latitude + ", " + position.coords.longitude);
+                    validateLocation();
+                });
+            } else {
+                locationInput.addClass("is-invalid");
+                locationInput.attr("value", "Geolocation is not supported by this browser.");
+            }
+            break;
     }
-}
-
-/**
- * Switch between using an address or latitude/longitude
- */
-function toggleLookupType() {
-    if ($("#lookupType").text() === "address") {
-        $("#lookupType").text("latitude and longitude");
-        $("#location").attr("placeholder","10.5213, -7.4663");
-    } else {
-        $("#lookupType").text("address");
-        $("#location").attr("placeholder","123 Main Street, 43212");
-    }
-}
+});

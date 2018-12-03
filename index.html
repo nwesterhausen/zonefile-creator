@@ -15,7 +15,8 @@
 </head>
 <body>
 <div class="container">
-    <h1>Zone Builder for <a href="https://home-assistant.io/">Home Assistant</a> v<span id="version_number">null</span></h1>
+    <h1>Zone Builder for <a href="https://home-assistant.io/">Home Assistant</a> v<span id="version_number">null</span>
+    </h1>
     <p>
         Use this tool to help you generate a set of <a href="https://www.home-assistant.io/components/zone/">zones</a>
         that you can use within Home Assistant for automation or record keeping. Visit the
@@ -25,21 +26,31 @@
     <div>
         <fieldset class="form-group">
             <legend>Build-a-zone</legend>
-            <div class="form-group row justify-content-end" id="zoneNameGroup">
+            <div class="form-group row" id="zoneNameGroup">
                 <label class="col-form-label col-sm-3" for="zoneName">Name</label>
                 <input class="form-control col-sm-9" id="zoneName" placeholder="Delivery Pad">
                 <div id="nameFeedback"></div>
             </div>
-            <div class="form-group row justify-content-end" id="locationGroup">
-                <label class="col-form-label col-sm-3" for="location">Location</label>
-                <input class="form-control col-sm-9" id="location" placeholder="10.12345, -10.98765">
-                <div class="col-sm-9" id="locationFeedback"></div>
-            </div>
-            <div class="form-group row justify-content-end">
-                <button class="btn btn-sm btn-outline-warn" id="toggleLookupType">Lookup by <span id="lookupType">address</span>
-                    instead.
-                </button>
-                <button class="btn btn-sm btn-outline-primary" id="useCurrentLocation">Use my location</button>
+            <div class="form-group" id="locationGroup">
+                <div class="row">
+                    <label class="col-form-label col-sm-3" for="location">Location</label>
+                    <div class="btn-group btn-group-toggle col-sm-9" data-toggle="buttons">
+                        <label class="btn btn-warning active">
+                            <input type="radio" name="loctype" id="useLatlon" autocomplete="off" > Latitude &
+                            Longitude
+                        </label>
+                        <label class="btn btn-warning">
+                            <input type="radio" name="loctype" id="useAddress" autocomplete="off"> Address
+                        </label>
+                        <label class="btn btn-warning">
+                            <input type="radio" name="loctype" id="useGeoloc" autocomplete="off"> Use my location
+                        </label>
+                    </div>
+                </div><br>
+                <div class="row">
+                    <input class="form-control offset-sm-3 col-sm-9" data-lookup-type="useLatlon" id="location" placeholder="10.12345, -10.98765">
+                    <div class="offset-sm-3 col-sm-9" id="locationFeedback">Test</div>
+                </div>
             </div>
             <div class="form-group row" id="radiusGroup">
                 <label class="col-form-label col-sm-3" for="radius">Radius (m)</label>
