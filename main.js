@@ -72,7 +72,7 @@ function validateLocation() {
         let lat = parseFloat(locinput.split(sep)[0]);
         let lon = parseFloat(locinput.split(sep)[1]);
 
-        if (locinput.split(sep).length === 2 && typeof lat === "number" && typeof lon === "number") {
+        if (locinput.split(sep).length === 2 && locinput.split(sep)[0].indexOf(' ') === -1 && typeof lat === "number" && typeof lon === "number") {
             locationfeedback.html("This looks like latitude and longitude, please use an address!");
             locationInput.addClass("is-invalid");
             locationfeedback.addClass("invalid-feedback");
@@ -93,7 +93,7 @@ function validateLocation() {
         let lat = parseFloat(locinput.split(sep)[0]);
         let lon = parseFloat(locinput.split(sep)[1]);
 
-        if (isNaN(lat) || isNaN(lon) || locinput.split(sep).length > 2) {
+        if (isNaN(lat) || isNaN(lon) || locinput.split(sep).length > 2  || locinput.split(sep)[0].indexOf(' ') !== -1) {
             locationfeedback.html("Please use the format <em>latitude, longitude</em>!");
             locationInput.addClass("is-invalid");
             locationfeedback.addClass("invalid-feedback");
@@ -102,6 +102,8 @@ function validateLocation() {
             locationfeedback.html("Latitude: " + lat + ", Longitude: " + lon);
             locationInput.addClass("is-valid");
             locationfeedback.addClass("valid-feedback");
+            locationInput.attr("data-latitude",lat);
+            locationInput.attr("data-longitude",lon);
             if ($("#zoneName").hasClass("is-valid"))
                 $("#addBtn").removeAttr("disabled");
         }
@@ -118,6 +120,8 @@ function parseLocationJSON(json) {
         latlonfeedback.html("Latitude: " + json.results[0].geometry.lat + ", Longitude: " + json.results[0].geometry.lng);
         $("#location").addClass("is-valid");
         latlonfeedback.addClass("valid-feedback");
+        $("#location").attr("data-latitude",json.results[0].geometry.lat);
+        $("#location").attr("data-longitude",json.results[0].geometry.lng);
         if ($("#zoneName").hasClass("is-valid"))
             $("#addBtn").removeAttr("disabled");
     } else {
@@ -173,8 +177,8 @@ function clear() {
 function addZone() {
     if ($('#location').hasClass("is-valid") && $('#zoneName').hasClass("is-valid")) {
         let name = $('#zoneName').val();
-        let latitude = $('#location').val().split(',')[0];
-        let longitude = $('#location').val().split(',')[1];
+        let latitude = $('#location').attr("data-latitude");
+        let longitude = $('#location').attr("data-longitude");
         let radius = $('#radius').val() === '' ? 25 : $('#radius').val();
         let icon = $('#iconSelect').val();
 
