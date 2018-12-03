@@ -93,7 +93,7 @@ function validateLocation() {
         let lat = parseFloat(locinput.split(sep)[0]);
         let lon = parseFloat(locinput.split(sep)[1]);
 
-        if (isNaN(lat) || isNaN(lon) || locinput.split(sep)[0].length >= 12) {
+        if (isNaN(lat) || isNaN(lon) || locinput.split(sep).length > 2) {
             locationfeedback.html("Please use the format <em>latitude, longitude</em>!");
             locationInput.addClass("is-invalid");
             locationfeedback.addClass("invalid-feedback");
