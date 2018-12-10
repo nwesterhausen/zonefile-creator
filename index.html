@@ -9,8 +9,16 @@
     <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/litera/bootstrap.min.css" type="text/css"
           rel="stylesheet">
 
+    <link href="https://cdn.materialdesignicons.com/3.2.89/css/materialdesignicons.min.css" type="text/css"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
 
 </head>
 <body>
@@ -60,13 +68,13 @@
             <div class="form-group row" id="iconGroup">
                 <label class="col-form-label col-sm-3" for="iconSelect">Icon</label>
                 <select class="form-control col-sm-9" id="iconSelect" value="mdi:pin-outline">
-                    <option value="mdi:pin-outline">Location Pin</option>
-                    <option value="mdi:office-building">Office</option>
-                    <option value="mdi:store">Store</option>
-                    <option value="mdi:gas-station">Gas Station</option>
-                    <option value="mdi:silverware-fork-knife">Restaurant</option>
-                    <option value="mdi:airport">Airport</option>
-                    <option value="mdi:hotel">Hotel</option>
+                    <option value="mdi:pin-outline" data-icon="mdi mdi-pin-outline">Location Pin</option>
+                    <option value="mdi:office-building" data-icon="mdi mdi-office-building">Office</option>
+                    <option value="mdi:store" data-icon="mdi mdi-store">Store</option>
+                    <option value="mdi:gas-station" data-icon="mdi mdi-gas-station">Gas Station</option>
+                    <option value="mdi:silverware-fork-knife" data-icon="mdi mdi-silverware-fork-knife">Restaurant</option>
+                    <option value="mdi:airport" data-icon="mdi mdi-airport">Airport</option>
+                    <option value="mdi:hotel" data-icon="mdi mdi-hotel">Hotel</option>
                 </select>
             </div>
             <button class="btn btn-danger" id="clearBtn">Clear</button>
