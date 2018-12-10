@@ -1,0 +1,33 @@
+
+.files {
+    position: relative;
+    text-align: center;
+    margin: 0;
+    overflow: hidden;
+    width: 100%;
+    border: 3px solid #fff
+}
+.files:hover {
+    border: 3px dashed #0142fe;
+
+}
+
+.files input {
+    height: 48px;
+    border: none;
+    padding: 0;
+    background: transparent;
+    text-align: center;
+}
+
+.files:before {
+    content: "Choose or Drag your zones.yaml here";
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+    display: block;
+    text-align: center;
+    color: #0142fe;
+    font-weight: bold;
+}

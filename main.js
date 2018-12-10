@@ -17,6 +17,12 @@ $("#zoneName").change(validateZoneName);
 $("#version_number").text(TOOL_VERSION);
 $("select").selectpicker();
 
+$("#uploadFile").on('input', function() {
+    let f = $("#uploadFile")[0].files[0];
+    $("#fileStatus").append("<p>"+f.name+" (last modified "+moment(f.lastModified).fromNow()+")"+"</p>");
+    console.log($("#uploadFile")[0].files)
+});
+
 /**
  * Takes the generated YAML and puts it into a file that gets downloaded.
  *

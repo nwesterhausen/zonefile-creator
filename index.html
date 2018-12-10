@@ -11,7 +11,9 @@
 
     <link href="https://cdn.materialdesignicons.com/3.2.89/css/materialdesignicons.min.css" type="text/css"
           rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+    <link rel="stylesheet" type="text/css" href="./style.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
@@ -19,6 +21,7 @@
             crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
 
 </head>
 <body>
@@ -31,6 +34,14 @@
         <a href="https://github.com/nwesterhausen/zonefile-creator">Github Repo</a> to file an issue or take a look at
         how it works!
     </p>
+    <div class="container">
+        <div class="row">
+            <div class="form-group files">
+                <input id="uploadFile" type="file" class="form-control" accept=".yaml,.yml,application/yaml">
+            </div>
+        </div>
+        <div class="row" id="fileStatus"></div>
+    </div>
     <div>
         <fieldset class="form-group">
             <legend>Build-a-zone</legend>
@@ -44,7 +55,7 @@
                     <label class="col-form-label col-sm-3" for="location">Location</label>
                     <div class="btn-group btn-group-toggle col-sm-9" data-toggle="buttons">
                         <label class="btn btn-outline-warning active">
-                            <input type="radio" name="loctype" id="useLatlon" autocomplete="off" > Latitude &
+                            <input type="radio" name="loctype" id="useLatlon" autocomplete="off"> Latitude &
                             Longitude
                         </label>
                         <label class="btn btn-outline-warning">
@@ -54,9 +65,11 @@
                             <input type="radio" name="loctype" id="useGeoloc" autocomplete="off"> Use my location
                         </label>
                     </div>
-                </div><br>
+                </div>
+                <br>
                 <div class="row">
-                    <input class="form-control offset-sm-3 col-sm-9" data-latitude="" data-longitude="" data-lookup-type="useLatlon" id="location" placeholder="10.12345, -10.98765">
+                    <input class="form-control offset-sm-3 col-sm-9" data-latitude="" data-longitude=""
+                           data-lookup-type="useLatlon" id="location" placeholder="10.12345, -10.98765">
                     <div class="offset-sm-3 col-sm-9" id="locationFeedback"></div>
                 </div>
             </div>
@@ -72,7 +85,8 @@
                     <option value="mdi:office-building" data-icon="mdi mdi-office-building">Office</option>
                     <option value="mdi:store" data-icon="mdi mdi-store">Store</option>
                     <option value="mdi:gas-station" data-icon="mdi mdi-gas-station">Gas Station</option>
-                    <option value="mdi:silverware-fork-knife" data-icon="mdi mdi-silverware-fork-knife">Restaurant</option>
+                    <option value="mdi:silverware-fork-knife" data-icon="mdi mdi-silverware-fork-knife">Restaurant
+                    </option>
                     <option value="mdi:airport" data-icon="mdi mdi-airport">Airport</option>
                     <option value="mdi:hotel" data-icon="mdi mdi-hotel">Hotel</option>
                 </select>
